@@ -21,7 +21,7 @@ class InfoHeader extends StatelessWidget {
                   color: Color(0xFF787878))),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 25, top: 17),
+          margin: const EdgeInsets.only(top: 17),
           child: Image.asset("assets/images/Wifi.png"),
         ),
         Container(

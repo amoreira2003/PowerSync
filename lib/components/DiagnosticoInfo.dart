@@ -20,8 +20,8 @@ class DiagnosticoInfo extends StatelessWidget {
 
   Color getBackgroundColor() {
     return value == "off"
-        ? Color.fromARGB(255, 236, 163, 44) // Red background for "off"
-        : Color.fromARGB(255, 34, 201, 30); // Green background otherwise
+        ? const Color.fromARGB(255, 236, 163, 44) // Red background for "off"
+        : const Color.fromARGB(255, 34, 201, 30); // Green background otherwise
   }
 
   @override
@@ -29,12 +29,12 @@ class DiagnosticoInfo extends StatelessWidget {
     return Row(
       children: [
         Container(
-          margin: EdgeInsets.only(right: 15),
+          margin: const EdgeInsets.only(right: 15),
           child: Text(displayName,
               style: GoogleFonts.barlow(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 212, 212, 212))),
+                  color: const Color.fromARGB(255, 212, 212, 212))),
         ),
         RoundedImageIcon(
           imagePath: getImagePath(),

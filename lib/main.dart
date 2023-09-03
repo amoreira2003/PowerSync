@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:raizen_obd/components/SmallInfoBlock.dart';
 import 'components/BigInfoBlock.dart';
 import 'components/InfoHeader.dart';
-import 'components/SmallInfoBlock.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import 'components/RoundedImageIcon.dart';
 import 'components/DiagnosticoInfo.dart';
-import 'package:web_socket_channel/status.dart' as status;
+import 'components/BluetoothText.dart';
 
 void main() {
   runApp(const MainApp());
@@ -49,8 +47,10 @@ class _MainAppState extends State<MainApp> {
       });
 
       // Update time every second
-      Future.delayed(Duration(seconds: 1), _updateTime);
+      Future.delayed(const Duration(seconds: 1), _updateTime);
     }
+
+    bool bluetoothTest = true;
 
     @override
     void initState() {
@@ -59,7 +59,7 @@ class _MainAppState extends State<MainApp> {
     }
 
     final channel = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.242.247:3100'),
+      Uri.parse('ws://localhost:3100'),
     );
 
     @override
@@ -67,6 +67,9 @@ class _MainAppState extends State<MainApp> {
       channel.sink.close();
       super.dispose();
     }
+
+    if (bluetoothTest)
+      return MaterialApp(home: Scaffold(body: BluetoothText()));
 
     return MaterialApp(
       home: Scaffold(
@@ -78,6 +81,7 @@ class _MainAppState extends State<MainApp> {
                 Map<String, dynamic> value = json.decode(snapshot.data);
                 print(value);
                 Map<String, dynamic> values = value["data"];
+
                 kmRodado = values["kmRodado"];
                 gasolina = values["gasolina"];
                 values = values["diagnostico"];
@@ -91,8 +95,8 @@ class _MainAppState extends State<MainApp> {
                 return Column(
                   children: [
                     Container(
-                      margin: EdgeInsetsDirectional.all(37),
-                      child: Row(
+                      margin: const EdgeInsetsDirectional.all(37),
+                      child: const Row(
                         children: [
                           Icon(Icons.menu, color: Colors.black, size: 25)
                         ],
@@ -106,8 +110,8 @@ class _MainAppState extends State<MainApp> {
                           BigInfoBlock(
                             child: Column(
                               children: [
-                                InfoHeader(),
-                                Container(
+                                const InfoHeader(),
+                                SizedBox(
                                     width: 276,
                                     height: 137,
                                     child:
@@ -131,19 +135,22 @@ class _MainAppState extends State<MainApp> {
                                                     fontSize: 10,
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    color: Color(0xFF787878))),
+                                                    color: const Color(
+                                                        0xFF787878))),
                                             Text("HB 20",
                                                 style: GoogleFonts.barlow(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.w600,
-                                                    color: Color(0xFF2C2B34))),
+                                                    color: const Color(
+                                                        0xFF2C2B34))),
                                             Text(
                                                 "2022 Platinum Plus 1.0 TGDI AT",
                                                 style: GoogleFonts.barlow(
                                                     fontSize: 10,
                                                     fontWeight:
                                                         FontWeight.normal,
-                                                    color: Color(0xFF787878))),
+                                                    color: const Color(
+                                                        0xFF787878))),
                                           ],
                                         ),
                                       ),
@@ -160,24 +167,25 @@ class _MainAppState extends State<MainApp> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   bottom: 6, right: 5.7),
                                               child: Row(
                                                 children: [
                                                   Container(
                                                     width: 10.3,
                                                     height: 10.5,
-                                                    margin: EdgeInsets.only(
-                                                        right: 5.7),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 5.7),
                                                     child: Image.asset(
                                                         "assets/images/Arrow.png"),
                                                   ),
-                                                  Text("${kmRodado} KM",
+                                                  Text("$kmRodado KM",
                                                       style: GoogleFonts.barlow(
                                                           fontSize: 10,
                                                           fontWeight:
                                                               FontWeight.normal,
-                                                          color: Color(
+                                                          color: const Color(
                                                               0xFF787878))),
                                                 ],
                                               ),
@@ -188,17 +196,18 @@ class _MainAppState extends State<MainApp> {
                                                   Container(
                                                     width: 10.3,
                                                     height: 10.5,
-                                                    margin: EdgeInsets.only(
-                                                        right: 5.7),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 5.7),
                                                     child: Image.asset(
                                                         "assets/images/Pump.png"),
                                                   ),
-                                                  Text("${gasolina} L",
+                                                  Text("$gasolina L",
                                                       style: GoogleFonts.barlow(
                                                           fontSize: 10,
                                                           fontWeight:
                                                               FontWeight.normal,
-                                                          color: Color(
+                                                          color: const Color(
                                                               0xFF787878))),
                                                 ],
                                               ),
@@ -214,7 +223,7 @@ class _MainAppState extends State<MainApp> {
                           ),
                           SmallInfoBlock(
                             childFirst: Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                 left: 20,
                                 top: 16,
                               ),
@@ -223,29 +232,29 @@ class _MainAppState extends State<MainApp> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.only(bottom: 10),
+                                      margin: const EdgeInsets.only(bottom: 10),
                                       child: Text("Localização",
                                           style: GoogleFonts.barlow(
                                               fontSize: 12,
                                               fontWeight: FontWeight.normal,
-                                              color: Color(0xFF787878))),
+                                              color: const Color(0xFF787878))),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(bottom: 10),
+                                      margin: const EdgeInsets.only(bottom: 10),
                                       child: Text(
                                           "Av Lins De Vasconselos, 1222",
                                           style: GoogleFonts.barlow(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600,
-                                              color: Color(0xFF2C2B34))),
+                                              color: const Color(0xFF2C2B34))),
                                     ),
                                     Container(
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      child: Text("Hoje, ${currentTime}",
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: Text("Hoje, $currentTime",
                                           style: GoogleFonts.barlow(
                                               fontSize: 12,
                                               fontWeight: FontWeight.normal,
-                                              color: Color(0xFF787878))),
+                                              color: const Color(0xFF787878))),
                                     ),
                                   ]),
                             ),
@@ -268,35 +277,38 @@ class _MainAppState extends State<MainApp> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 21),
+                                  margin: const EdgeInsets.only(top: 21),
                                   child: Text("Diagnóstico",
                                       style: GoogleFonts.barlow(
                                           fontSize: 12,
                                           fontWeight: FontWeight.normal,
-                                          color: Color.fromARGB(
+                                          color: const Color.fromARGB(
                                               255, 212, 212, 212))),
                                 ),
                                 Container(
                                   child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Column(
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(top: 24),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
                                               child: DiagnosticoInfo(
                                                   displayName: "Combustível",
                                                   value: combustivel),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.only(top: 24),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
                                               child: DiagnosticoInfo(
                                                   displayName: "Motor",
                                                   value: motor),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.only(top: 24),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
                                               child: DiagnosticoInfo(
                                                   displayName: "Câmbio",
                                                   value: cambio),
@@ -306,20 +318,22 @@ class _MainAppState extends State<MainApp> {
                                         Column(
                                           children: [
                                             Container(
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   top: 24, left: 15),
                                               child: DiagnosticoInfo(
                                                   displayName: "Freios",
                                                   value: freios),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.only(top: 24),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
                                               child: DiagnosticoInfo(
                                                   displayName: "Cabine",
                                                   value: cabine),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.only(top: 24),
+                                              margin: const EdgeInsets.only(
+                                                  top: 24),
                                               child: DiagnosticoInfo(
                                                   displayName: "Elétrico",
                                                   value: eletrico),
@@ -338,7 +352,7 @@ class _MainAppState extends State<MainApp> {
                 );
               }
 
-              return Center(child: const CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }),
       ),
     );

@@ -18,7 +18,7 @@ class InfoHeader extends StatelessWidget {
               style: GoogleFonts.barlow(
                   fontSize: 12,
                   fontWeight: FontWeight.normal,
-                  color: Color(0xFF787878))),
+                  color: const Color(0xFF787878))),
         ),
         Container(
           margin: const EdgeInsets.only(top: 17),
@@ -30,7 +30,7 @@ class InfoHeader extends StatelessWidget {
               style: GoogleFonts.barlow(
                   fontSize: 12,
                   fontWeight: FontWeight.normal,
-                  color: Color(0xFF787878))),
+                  color: const Color(0xFF787878))),
         ),
       ],
     );

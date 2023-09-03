@@ -9,7 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_blue: ^0.8.0
   google_fonts: ^5.1.0
+  permission_handler: ^10.4.3
   web_socket_channel: ^2.4.0
 
 dev_dependencies:

@@ -5,7 +5,7 @@ class RoundedImageIcon extends StatelessWidget {
   final double radius;
   final Color backgroundColor;
 
-  RoundedImageIcon({
+  const RoundedImageIcon({super.key, 
     required this.imagePath,
     required this.radius,
     required this.backgroundColor,

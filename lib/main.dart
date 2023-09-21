@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:intl/intl.dart';
 import 'package:raizen_obd/components/SmallInfoBlock.dart';
 import 'package:raizen_obd/methods/BluetoothManager.dart';
+import 'package:raizen_obd/methods/PermissionHandler.dart';
 import 'components/BigInfoBlock.dart';
 import 'components/InfoHeader.dart';
 import 'package:flutter/services.dart';
@@ -39,34 +41,21 @@ class _MainAppState extends State<MainApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    @override
-    void initState() {
-      super.initState();
-    }
-
-    @override
-    void dispose() {
-      super.dispose();
-    }
-
 // Request Bluetooth permissions
+    PermissionHandler permissionHandler = PermissionHandler();
+    BluetoothManager bluetoothManager = BluetoothManager(permissionHandler);
+
+    String characteristicId = "0000fff1-0000-1000-8000-00805f9b34fb";
+    String serviceId = "0000fff0-0000-1000-8000-00805f9b34fb";
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: [
             Container(
               margin: const EdgeInsetsDirectional.all(37),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        print("Request bluetooth button pressed");
-                      },
-                      child: const Text("Request Bluetooth Permission")),
-                  const Icon(Icons.menu, color: Colors.black, size: 25)
-                ],
-              ),
+              child: const Icon(Icons.menu, color: Colors.black, size: 25),
             ),
             Center(
               child: Column(
@@ -182,13 +171,12 @@ class _MainAppState extends State<MainApp> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              child: Text("Localização",
-                                  style: GoogleFonts.barlow(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal,
-                                      color: const Color(0xFF787878))),
-                            ),
+                                margin: const EdgeInsets.only(bottom: 10),
+                                child: Text("Localização",
+                                    style: GoogleFonts.barlow(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.normal,
+                                        color: const Color(0xFF787878)))),
                             Container(
                               margin: const EdgeInsets.only(bottom: 10),
                               child: Text("Av Lins De Vasconselos, 1222",
@@ -199,11 +187,18 @@ class _MainAppState extends State<MainApp> {
                             ),
                             Container(
                               margin: const EdgeInsets.only(bottom: 10),
-                              child: Text("Hoje, $currentTime",
-                                  style: GoogleFonts.barlow(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.normal,
-                                      color: const Color(0xFF787878))),
+                              child: StreamBuilder(
+                                  stream: Stream.periodic(
+                                      const Duration(seconds: 1)),
+                                  builder: (context, snapshot) {
+                                    String currentTime = DateFormat('HH:mm')
+                                        .format(DateTime.now());
+                                    return Text("Hoje, $currentTime",
+                                        style: GoogleFonts.barlow(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.normal,
+                                            color: const Color(0xFF787878)));
+                                  }),
                             ),
                           ]),
                     ),
@@ -234,8 +229,9 @@ class _MainAppState extends State<MainApp> {
                                       255, 212, 212, 212))),
                         ),
                         Container(
+                          margin: EdgeInsets.only(top: 15),
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
                                   children: [

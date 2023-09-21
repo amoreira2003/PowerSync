@@ -28,14 +28,11 @@ class DiagnosticoInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          margin: const EdgeInsets.only(right: 15),
-          child: Text(displayName,
-              style: GoogleFonts.barlow(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: const Color.fromARGB(255, 212, 212, 212))),
-        ),
+        Text(displayName,
+            style: GoogleFonts.barlow(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: const Color.fromARGB(255, 212, 212, 212))),
         RoundedImageIcon(
           imagePath: getImagePath(),
           backgroundColor:

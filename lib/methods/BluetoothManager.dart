@@ -22,11 +22,29 @@ class BluetoothManager {
   DiscoveredDevice? currentConnectedDevice;
   StreamSubscription? subscriptionToConnectedDevice;
 
-  Future<Stream<List<int>>> registerListener(characteristic) async {
-    if (characteristic == null) {
-      throw ArgumentError("Characteristic cannot be null");
+  late QualifiedCharacteristic characteristic;
+
+  PermissionHandler permissionHandler;
+
+  BluetoothManager(this.permissionHandler);
+
+  void populateCharacteristic(String characteristicId, String serviceId) {
+    if (currentConnectedDevice == null) {
+      throw ArgumentError("Not connected to a device");
     }
-    return flutterReactiveBle.subscribeToCharacteristic(characteristic);
+    characteristic = QualifiedCharacteristic(
+        characteristicId: Uuid.parse(characteristicId),
+        serviceId: Uuid.parse(serviceId),
+        deviceId: currentConnectedDevice!.id);
+  }
+
+  Future<void> registerListener() async {
+    flutterReactiveBle.subscribeToCharacteristic(characteristic).listen((data) {
+      print("Receiving Data");
+      print(data);
+    }, onError: (dynamic error) {
+      print(error);
+    });
   }
 
   Future<Stream<ConnectionStateUpdate>> connect(deviceToConnect) async {
@@ -37,28 +55,28 @@ class BluetoothManager {
       throw ArgumentError("Already connected to a device");
     }
     return flutterReactiveBle.connectToDevice(
-        id: deviceToConnect.id, connectionTimeout: Duration(seconds: 10));
+        id: deviceToConnect.id, connectionTimeout: const Duration(seconds: 10));
   }
 
-  Future<void> send(characteristic, List<int> command) async {
-    if (characteristic == null) {
-      throw ArgumentError("Characteristic cannot be null");
+  Future<void> send(List<int> command) async {
+    if (currentConnectedDevice == null) {
+      throw ArgumentError("Not connected to a device");
     }
+
+    await flutterReactiveBle.writeCharacteristicWithResponse(characteristic,
+        value: command);
+
+    print(await flutterReactiveBle.readCharacteristic(characteristic));
   }
 
   Future<void> recon(PermissionHandler permissionHandler) async {
-    if (!permissionHandler.isBluetoothScanAllowed ||
-        !permissionHandler.isBluetoothConnectAllowed) {
-      throw ArgumentError("Bluetooth permission not granted");
-    }
-
     if (currentConnectedDevice != null) {
       throw ArgumentError("Already connected to a device");
     }
 
     StreamSubscription? reconDeviceSub;
 
-    reconDeviceSub = flutterReactiveBle.scanForDevices(
+    reconDeviceSub = await flutterReactiveBle.scanForDevices(
         withServices: [], scanMode: ScanMode.balanced).listen((device) {
       print(
           "Found device ${device.name} @ ${device.id} with RSSI ${device.rssi} dBm}");
@@ -66,7 +84,6 @@ class BluetoothManager {
         print("Found OBDII device, sending connect command");
         connect(device);
         reconDeviceSub?.cancel();
-
         return;
       }
     }, onError: (e) {

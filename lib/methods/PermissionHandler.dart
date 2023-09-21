@@ -13,7 +13,7 @@ class PermissionHandler {
     Permission.bluetoothScan.request().then((value) {
       // Switch trough possible values of success
       // value.isGranted is an example of success
-
+      print(value);
       switch (value) {
         case PermissionStatus.denied:
           isBluetoothScanAllowed = false;

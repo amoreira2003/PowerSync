@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raizen_obd/methods/Scale.dart';
 import './RoundedImageIcon.dart';
 
 class DiagnosticoInfo extends StatelessWidget {
@@ -30,7 +31,7 @@ class DiagnosticoInfo extends StatelessWidget {
       children: [
         Text(displayName,
             style: GoogleFonts.barlow(
-                fontSize: 14,
+                fontSize: Scale.scaleWidth(context, 14),
                 fontWeight: FontWeight.w700,
                 color: const Color.fromARGB(255, 212, 212, 212))),
         RoundedImageIcon(

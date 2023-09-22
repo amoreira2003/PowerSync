@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:raizen_obd/methods/PermissionHandler.dart';
 
 class BluetoothManager {
+  
   /* Created by Alexandre Moreira - 11/09/2023
 
    * This class is responsible for managing the bluetooth connection
@@ -76,7 +76,7 @@ class BluetoothManager {
 
     StreamSubscription? reconDeviceSub;
 
-    reconDeviceSub = await flutterReactiveBle.scanForDevices(
+    reconDeviceSub = flutterReactiveBle.scanForDevices(
         withServices: [], scanMode: ScanMode.balanced).listen((device) {
       print(
           "Found device ${device.name} @ ${device.id} with RSSI ${device.rssi} dBm}");

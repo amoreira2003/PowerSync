@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raizen_obd/methods/Scale.dart';
 
 class SmallInfoBlock extends StatelessWidget {
   final Widget childFirst;
@@ -13,15 +14,15 @@ class SmallInfoBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 19),
+      margin: EdgeInsets.only(bottom: Scale.scaleHeight(context, 19)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            margin: const EdgeInsets.only(right: 10),
-            width: 151,
-            height: 170,
+            margin: EdgeInsets.only(right: Scale.scaleWidth(context, 10)),
+            width: Scale.scaleWidth(context, 151),
+            height: Scale.scaleHeight(context, 170),
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 243, 243, 243),
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -29,8 +30,8 @@ class SmallInfoBlock extends StatelessWidget {
             child: childFirst,
           ),
           Container(
-            width: 151,
-            height: 170,
+            width: Scale.scaleWidth(context, 151),
+            height: Scale.scaleHeight(context, 170),
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 243, 243, 243),
               borderRadius: BorderRadius.all(Radius.circular(20)),

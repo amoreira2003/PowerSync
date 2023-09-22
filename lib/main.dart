@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:raizen_obd/components/SmallInfoBlock.dart';
 import 'package:raizen_obd/methods/BluetoothManager.dart';
 import 'package:raizen_obd/methods/PermissionHandler.dart';
+import 'package:raizen_obd/methods/Scale.dart';
 import 'components/BigInfoBlock.dart';
 import 'components/InfoHeader.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +55,9 @@ class _MainAppState extends State<MainApp> {
         body: Column(
           children: [
             Container(
-              margin: const EdgeInsetsDirectional.all(37),
+              margin: EdgeInsetsDirectional.symmetric(
+                  horizontal: Scale.scaleWidth(context, 37),
+                  vertical: Scale.scaleHeight(context, 37)),
               child: const Icon(Icons.menu, color: Colors.black, size: 25),
             ),
             Center(
@@ -67,14 +70,15 @@ class _MainAppState extends State<MainApp> {
                       children: [
                         const InfoHeader(),
                         SizedBox(
-                            width: 276,
-                            height: 137,
+                            width: Scale.scaleWidth(context, 276),
+                            height: Scale.scaleHeight(context, 137),
                             child: Image.asset("assets/images/Car.png")),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              margin: const EdgeInsets.only(left: 25),
+                              margin: EdgeInsets.only(
+                                  left: Scale.scaleWidth(context, 25)),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Column(
@@ -83,17 +87,20 @@ class _MainAppState extends State<MainApp> {
                                   children: [
                                     Text("Hyundai",
                                         style: GoogleFonts.barlow(
-                                            fontSize: 10,
+                                            fontSize:
+                                                Scale.scaleWidth(context, 10),
                                             fontWeight: FontWeight.normal,
                                             color: const Color(0xFF787878))),
                                     Text("HB 20",
                                         style: GoogleFonts.barlow(
-                                            fontSize: 20,
+                                            fontSize:
+                                                Scale.scaleWidth(context, 20),
                                             fontWeight: FontWeight.w600,
                                             color: const Color(0xFF2C2B34))),
                                     Text("2022 Platinum Plus 1.0 TGDI AT",
                                         style: GoogleFonts.barlow(
-                                            fontSize: 10,
+                                            fontSize:
+                                                Scale.scaleWidth(context, 10),
                                             fontWeight: FontWeight.normal,
                                             color: const Color(0xFF787878))),
                                   ],
@@ -101,8 +108,9 @@ class _MainAppState extends State<MainApp> {
                               ),
                             ),
                             Container(
-                              margin:
-                                  const EdgeInsets.only(left: 25, right: 25),
+                              margin: EdgeInsets.only(
+                                  left: Scale.scaleWidth(context, 25),
+                                  right: Scale.scaleWidth(context, 25)),
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Column(
@@ -110,21 +118,27 @@ class _MainAppState extends State<MainApp> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                          bottom: 6, right: 5.7),
+                                      margin: EdgeInsets.only(
+                                          bottom: Scale.scaleHeight(context, 6),
+                                          right:
+                                              Scale.scaleWidth(context, 5.7)),
                                       child: Row(
                                         children: [
                                           Container(
-                                            width: 10.3,
-                                            height: 10.5,
-                                            margin: const EdgeInsets.only(
-                                                right: 5.7),
+                                            width:
+                                                Scale.scaleWidth(context, 10.3),
+                                            height: Scale.scaleHeight(
+                                                context, 10.5),
+                                            margin: EdgeInsets.only(
+                                                right: Scale.scaleWidth(
+                                                    context, 5.7)),
                                             child: Image.asset(
                                                 "assets/images/Arrow.png"),
                                           ),
                                           Text("$kmRodado KM",
                                               style: GoogleFonts.barlow(
-                                                  fontSize: 10,
+                                                  fontSize: Scale.scaleWidth(
+                                                      context, 10),
                                                   fontWeight: FontWeight.normal,
                                                   color:
                                                       const Color(0xFF787878))),
@@ -135,16 +149,20 @@ class _MainAppState extends State<MainApp> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            width: 10.3,
-                                            height: 10.5,
-                                            margin: const EdgeInsets.only(
-                                                right: 5.7),
+                                            width:
+                                                Scale.scaleWidth(context, 10.3),
+                                            height: Scale.scaleHeight(
+                                                context, 10.5),
+                                            margin: EdgeInsets.only(
+                                                right: Scale.scaleWidth(
+                                                    context, 5.7)),
                                             child: Image.asset(
                                                 "assets/images/Pump.png"),
                                           ),
                                           Text("$gasolina L",
                                               style: GoogleFonts.barlow(
-                                                  fontSize: 10,
+                                                  fontSize: Scale.scaleWidth(
+                                                      context, 10),
                                                   fontWeight: FontWeight.normal,
                                                   color:
                                                       const Color(0xFF787878))),
@@ -162,40 +180,45 @@ class _MainAppState extends State<MainApp> {
                   ),
                   SmallInfoBlock(
                     childFirst: Container(
-                      margin: const EdgeInsets.only(
-                        left: 20,
-                        top: 16,
+                      margin: EdgeInsets.only(
+                        left: Scale.scaleWidth(context, 20),
+                        top: Scale.scaleHeight(context, 16),
                       ),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                                margin: const EdgeInsets.only(bottom: 10),
+                                margin: EdgeInsets.only(
+                                    bottom: Scale.scaleHeight(context, 10)),
                                 child: Text("Localização",
                                     style: GoogleFonts.barlow(
-                                        fontSize: 12,
+                                        fontSize: Scale.scaleWidth(context, 12),
                                         fontWeight: FontWeight.normal,
                                         color: const Color(0xFF787878)))),
                             Container(
-                              margin: const EdgeInsets.only(bottom: 10),
+                              margin: EdgeInsets.only(
+                                  bottom: Scale.scaleHeight(context, 10)),
                               child: Text("Av Lins De Vasconselos, 1222",
                                   style: GoogleFonts.barlow(
-                                      fontSize: 20,
+                                      fontSize: Scale.scaleWidth(context, 20),
                                       fontWeight: FontWeight.w600,
                                       color: const Color(0xFF2C2B34))),
                             ),
                             Container(
-                              margin: const EdgeInsets.only(bottom: 10),
+                              margin: EdgeInsets.only(
+                                  bottom: Scale.scaleWidth(context, 10)),
                               child: StreamBuilder(
                                   stream: Stream.periodic(
                                       const Duration(seconds: 1)),
                                   builder: (context, snapshot) {
                                     String currentTime = DateFormat('HH:mm')
                                         .format(DateTime.now());
+
                                     return Text("Hoje, $currentTime",
                                         style: GoogleFonts.barlow(
-                                            fontSize: 12,
+                                            fontSize:
+                                                Scale.scaleWidth(context, 12),
                                             fontWeight: FontWeight.normal,
                                             color: const Color(0xFF787878)));
                                   }),
@@ -205,9 +228,10 @@ class _MainAppState extends State<MainApp> {
                     childSecond: Container(),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(bottom: 19),
-                    width: 319,
-                    height: 234,
+                    margin:
+                        EdgeInsets.only(bottom: Scale.scaleHeight(context, 19)),
+                    width: Scale.scaleWidth(context, 319),
+                    height: Scale.scaleHeight(context, 234),
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.cover,
@@ -220,34 +244,39 @@ class _MainAppState extends State<MainApp> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          margin: const EdgeInsets.only(top: 21),
+                          margin: EdgeInsets.only(
+                              top: Scale.scaleHeight(context, 21)),
                           child: Text("Diagnóstico",
                               style: GoogleFonts.barlow(
-                                  fontSize: 12,
+                                  fontSize: Scale.scaleWidth(context, 12),
                                   fontWeight: FontWeight.normal,
                                   color: const Color.fromARGB(
                                       255, 212, 212, 212))),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 15),
+                          margin: EdgeInsets.only(
+                              top: Scale.scaleWidth(context, 15)),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(top: 24),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24)),
                                       child: DiagnosticoInfo(
                                           displayName: "Combustível",
                                           value: combustivel),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.only(top: 24),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24)),
                                       child: DiagnosticoInfo(
                                           displayName: "Motor", value: motor),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.only(top: 24),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24)),
                                       child: DiagnosticoInfo(
                                           displayName: "Câmbio", value: cambio),
                                     ),
@@ -256,18 +285,21 @@ class _MainAppState extends State<MainApp> {
                                 Column(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 24, left: 15),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24),
+                                          left: Scale.scaleWidth(context, 15)),
                                       child: DiagnosticoInfo(
                                           displayName: "Freios", value: freios),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.only(top: 24),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24)),
                                       child: DiagnosticoInfo(
                                           displayName: "Cabine", value: cabine),
                                     ),
                                     Container(
-                                      margin: const EdgeInsets.only(top: 24),
+                                      margin: EdgeInsets.only(
+                                          top: Scale.scaleHeight(context, 24)),
                                       child: DiagnosticoInfo(
                                           displayName: "Elétrico",
                                           value: eletrico),

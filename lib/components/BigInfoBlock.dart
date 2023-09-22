@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raizen_obd/methods/Scale.dart';
 
 class BigInfoBlock extends StatelessWidget {
   final Widget child;
@@ -11,9 +12,9 @@ class BigInfoBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 19),
-      width: 319,
-      height: 234,
+      margin: EdgeInsets.only(bottom: Scale.scaleHeight(context, 19)),
+      width: Scale.scaleWidth(context, 319),
+      height: Scale.scaleHeight(context, 234),
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 243, 243, 243),
         borderRadius: BorderRadius.all(Radius.circular(20)),

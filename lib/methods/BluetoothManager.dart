@@ -58,21 +58,40 @@ class BluetoothManager {
         id: deviceToConnect.id, connectionTimeout: const Duration(seconds: 10));
   }
 
-  double convertRPM(String receivedString) {
+  bool isRPMString(receivedString) {
+    List<String> parts = receivedString.split(' ');
+    if (parts.length == 4 && parts[0] == "41" && parts[1] == "0C") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int convertRPM(String receivedString) {
     List<String> parts = receivedString.split(' ');
 
     if (parts.length == 4 && parts[0] == "41" && parts[1] == "0C") {
-      int XX = int.parse(parts[2],
-          radix: 16); // Convert XX from hexadecimal to decimal
-      int YY = int.parse(parts[3],
-          radix: 16); // Convert YY from hexadecimal to decimal
+      int XX = int.parse(parts[2], radix: 16);
+      int YY = int.parse(parts[3], radix: 16);
 
       double result = (XX * 256 + YY) / 4;
 
-      print("XX: $XX");
-      print("YY: $YY");
-      print("Result: $result");
-      return result;
+      return result.round();
+    } else {
+      print("Invalid input format");
+      return 0;
+    }
+  }
+
+  int convertTemperature(String receivedString) {
+    List<String> parts = receivedString.split(' ');
+
+    if (parts.length == 3 && parts[0] == "41" && parts[1] == "05") {
+      int XX = int.parse(parts[2], radix: 16);
+
+      double result = XX - 40;
+
+      return result.round();
     } else {
       print("Invalid input format");
       return 0;

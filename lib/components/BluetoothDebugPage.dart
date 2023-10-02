@@ -27,7 +27,7 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Bluetooth Debug'),
+          title: const Text('Bluetooth Debug'),
         ),
         body: Center(
             child: Column(
@@ -36,7 +36,7 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
               onPressed: () {
                 permissionHandler.checkPermission();
               },
-              child: Text('Ask OS for permission'),
+              child: const Text('Ask OS for permission'),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -45,7 +45,7 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
                   currentDevice = device;
                 });
               },
-              child: Text('Recon Device'),
+              child: const Text('Recon Device'),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -55,14 +55,14 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
                   connectionState = newConnectionState;
                 });
               },
-              child: Text('Connect to Devices'),
+              child: const Text('Connect to Devices'),
             ),
             ElevatedButton(
                 onPressed: () {
                   bluetoothManager.populateCharacteristic(
                       characteristicId, serviceId);
                 },
-                child: Text("Populate Charateristic")),
+                child: const Text("Populate Charateristic")),
             ElevatedButton(
                 onPressed: () {
                   bluetoothManager.registerListener().then((stream) {
@@ -72,16 +72,14 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
                       setState(() {
                         answers.add(event.toString());
                         answers.add(
-                            "Ascii Conversion: " + String.fromCharCodes(event));
-                        answers.add("RPM Conversion: " +
-                            bluetoothManager
-                                .convertRPM(String.fromCharCodes(event).trim())
-                                .toString());
+                            "Ascii Conversion: ${String.fromCharCodes(event)}");
+                        answers.add("RPM Conversion: ${bluetoothManager
+                                .convertRPM(String.fromCharCodes(event).trim())}");
                       });
                     });
                   });
                 },
-                child: Text("Register Listener")),
+                child: const Text("Register Listener")),
             ElevatedButton(
               onPressed: () async {
                 List<String> newAnswers = [...answers];
@@ -105,35 +103,41 @@ class _BluetoothDebugPageState extends State<BluetoothDebugPage> {
                 await bluetoothManager
                     .send(bluetoothManager.convertToBinary("AT SP 0"));
               },
-              child: Text('Configure OBD'),
+              child: const Text('Configure OBD'),
             ),
             ElevatedButton(
               onPressed: () async {
                 await bluetoothManager
                     .send(bluetoothManager.convertToBinary("01 0C"));
               },
-              child: Text('Get RPM'),
+              child: const Text('Get RPM'),
             ),
+            ElevatedButton(
+                onPressed: () async {
+                  await bluetoothManager
+                      .send(bluetoothManager.convertToBinary("01 05"));
+                },
+                child: const Text('Get Coolant')),
             ElevatedButton(
                 onPressed: () {
                   setState(() {
                     startCalculatingRPM = !startCalculatingRPM;
                   });
                 },
-                child: Text("Toggle RPM Listening")),
+                child: const Text("Toggle RPM Listening")),
             StreamBuilder(
                 stream: connectionState,
                 builder: ((context, snapshot) =>
-                    Text("ConnectionState : " + snapshot.data.toString()))),
-            Text("Current Device: " + currentDevice.toString()),
-            Text("Answers:"),
+                    Text("ConnectionState : ${snapshot.data}"))),
+            Text("Current Device: $currentDevice"),
+            const Text("Answers:"),
             StreamBuilder(
-                stream: Stream.periodic(Duration(seconds: 1)),
+                stream: Stream.periodic(const Duration(seconds: 1)),
                 builder: (context, snapshot) {
-                  if (!startCalculatingRPM) return Text("Amo Kotlin");
+                  if (!startCalculatingRPM) return const Text("Amo Kotlin");
                   bluetoothManager
                       .send(bluetoothManager.convertToBinary("01 0C"));
-                  return Text("Sending Commands");
+                  return const Text("Sending Commands");
                 }),
             Expanded(
               child: SingleChildScrollView(

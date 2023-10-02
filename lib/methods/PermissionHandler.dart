@@ -8,8 +8,58 @@ class PermissionHandler {
 
   bool isBluetoothScanAllowed = false;
   bool isBluetoothConnectAllowed = false;
+  bool isLocationAllowed = false;
 
   void checkPermission() async {
+    Permission.location.request().then((value) {
+      // Switch trough possible values of success
+      // value.isGranted is an example of success
+      print(value);
+      switch (value) {
+        case PermissionStatus.denied:
+          isLocationAllowed = false;
+          openAppSettings();
+
+          break;
+
+        case PermissionStatus.granted:
+          isLocationAllowed = true;
+
+          break;
+
+        case PermissionStatus.limited:
+          isLocationAllowed = true;
+          // Do something if permission is limited
+
+          break;
+
+        case PermissionStatus.permanentlyDenied:
+
+          // Do something if permission is permanently denied
+          openAppSettings();
+          isLocationAllowed = false;
+
+          break;
+
+        case PermissionStatus.restricted:
+          isLocationAllowed = false;
+          // Do something if permission is restricted
+          // Popup that the permission is restricted
+          break;
+
+        case PermissionStatus.provisional:
+          isLocationAllowed = false;
+          // Do something if permission is provisional
+
+          break;
+
+        default:
+          isLocationAllowed = false;
+          // Do something if permission is unknown
+
+          break;
+      }
+    });
     Permission.bluetoothScan.request().then((value) {
       // Switch trough possible values of success
       // value.isGranted is an example of success

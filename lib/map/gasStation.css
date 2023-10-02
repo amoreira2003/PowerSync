@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Ubuntu&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    user-select: none;
+    overflow: hidden;
+}
+
+body {
+    width: 500px;
+    height: fit-content;
+}
+
+span {
+    font-family: 'Ubuntu', sans-serif;
+    align-self: center;
+    font-size: 20px;
+}
+
+.bubble i {
+    align-self: center;
+    color:white;
+    background-color: rgb(255,210,1);
+    padding: 4px 20px;
+    border-radius: 20px;
+    margin-right: 1px;
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.bubble {
+    display: flex;
+    align-content: center;
+    margin-top: 5px;
+    margin-left: -8px;
+    border-radius: 16px;
+    padding: 2px 8px 2px 8px;
+}
+
+.title {
+    margin: 15px;
+}
+
+.rating {
+    display: flex;
+    margin-top: 5px;
+    font-size: 20px;
+    align-content: center;
+    margin-bottom: 20px;
+}
+
+.vertical-align {
+    align-content: center;
+
+}
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.checked {
+    color: orange;
+}
+
+.button {
+    text-align: center;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    color: white;
+    background-color: rgb(255,210,1);
+    padding: 12px 20px 12px 20px;
+    width: fit-content;
+    border-radius: 16px;
+}
+.button * {
+    align-self: center;
+}
+.button i {
+    align-self: center;
+    margin-left: 10px;
+    font-size: 24px;
+}

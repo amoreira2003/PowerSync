@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:raizen_obd/components/BigInfoBlock.dart';
@@ -465,11 +467,27 @@ class _AppState extends State<App> {
                           Container(
                             margin: EdgeInsets.only(
                                 bottom: Scale.scaleHeight(context, 10)),
-                            child: Text("Av Lins De Vasconselos, 1222",
-                                style: GoogleFonts.barlow(
-                                    fontSize: Scale.scaleWidth(context, 20),
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color(0xFF2C2B34))),
+                            child: StreamBuilder(
+                                stream:
+                                    Stream.periodic(const Duration(seconds: 5)),
+                                builder: (context, snapshot) {
+                                  final Future<Position> position =
+                                      Geolocator.getCurrentPosition(
+                                          desiredAccuracy:
+                                              LocationAccuracy.high);
+
+                                  return FutureBuilder<String>(
+                                      future: getAddressFromPosition(position),
+                                      builder: (context, snapshot) {
+                                        return Text("${snapshot.data}",
+                                            style: GoogleFonts.barlow(
+                                                fontSize: Scale.scaleWidth(
+                                                    context, 17),
+                                                fontWeight: FontWeight.w600,
+                                                color:
+                                                    const Color(0xFF2C2B34)));
+                                      });
+                                }),
                           ),
                           Container(
                             margin: EdgeInsets.only(
@@ -885,6 +903,42 @@ class _AppState extends State<App> {
         ],
       ),
     );
+  }
+}
+
+Future<String> getAddressFromPosition(Future<Position> pos) async {
+  try {
+    Position position = await pos;
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+
+    if (placemarks.isNotEmpty) {
+      Placemark placemark = placemarks[0];
+      String address = '';
+      if (placemark.street != null) {
+        address += placemark.street! + ', ';
+      }
+      if (placemark.name != null) {
+        address += placemark.name! + ', ';
+      }
+      if (placemark.subLocality != null) {
+        address += placemark.subLocality! + ', ';
+      }
+      if (placemark.locality != null) {
+        address += placemark.locality! + ' ';
+      }
+      if (placemark.administrativeArea != null) {
+        address += placemark.administrativeArea!;
+      }
+
+      return address;
+    } else {
+      return 'Address not found';
+    }
+  } catch (e) {
+    return 'Error: $e';
   }
 }
 

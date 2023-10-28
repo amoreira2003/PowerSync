@@ -43,7 +43,7 @@ class _ShellFormState extends State<ShellForm> {
                     height: Scale.scaleHeight(context, 90),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 41),
-                        left: Scale.scaleWidth(context, 34),
+                        left: Scale.scaleWidth(context, 14),
                         right: 0),
                     child: Align(
                       alignment: Alignment.topLeft,
@@ -62,8 +62,8 @@ class _ShellFormState extends State<ShellForm> {
                     ),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 21),
-                        left: Scale.scaleWidth(context, 32),
-                        right: Scale.scaleWidth(context, 34)),
+                        left: Scale.scaleWidth(context, 12),
+                        right: Scale.scaleWidth(context, 14)),
                     width: Scale.scaleWidth(
                         context, 324), // Adjust width as needed
                     height: Scale.scaleHeight(
@@ -137,8 +137,8 @@ class _ShellFormState extends State<ShellForm> {
                     ),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 21),
-                        left: Scale.scaleWidth(context, 32),
-                        right: Scale.scaleWidth(context, 34)),
+                        left: Scale.scaleWidth(context, 12),
+                        right: Scale.scaleWidth(context, 14)),
                     width: Scale.scaleWidth(
                         context, 324), // Adjust width as needed
                     height: Scale.scaleHeight(
@@ -211,8 +211,8 @@ class _ShellFormState extends State<ShellForm> {
                     ),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 21),
-                        left: Scale.scaleWidth(context, 32),
-                        right: Scale.scaleWidth(context, 34)),
+                        left: Scale.scaleWidth(context, 12),
+                        right: Scale.scaleWidth(context, 14)),
                     width: Scale.scaleWidth(
                         context, 324), // Adjust width as needed
                     height: Scale.scaleHeight(
@@ -286,8 +286,8 @@ class _ShellFormState extends State<ShellForm> {
                     ),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 21),
-                        left: Scale.scaleWidth(context, 32),
-                        right: Scale.scaleWidth(context, 34)),
+                        left: Scale.scaleWidth(context, 12),
+                        right: Scale.scaleWidth(context, 14)),
                     width: Scale.scaleWidth(
                         context, 324), // Adjust width as needed
                     height: Scale.scaleHeight(
@@ -360,8 +360,8 @@ class _ShellFormState extends State<ShellForm> {
                     ),
                     margin: EdgeInsets.only(
                         top: Scale.scaleHeight(context, 21),
-                        left: Scale.scaleWidth(context, 32),
-                        right: Scale.scaleWidth(context, 34)),
+                        left: Scale.scaleWidth(context, 12),
+                        right: Scale.scaleWidth(context, 14)),
                     width: Scale.scaleWidth(
                         context, 324), // Adjust width as needed
                     height: Scale.scaleHeight(
@@ -422,8 +422,8 @@ class _ShellFormState extends State<ShellForm> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0)))),
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const App()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const App()));
                 },
                 child: Text("Cadastrar",
                     style: GoogleFonts.rubik(

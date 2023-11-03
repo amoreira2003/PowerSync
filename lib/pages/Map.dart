@@ -74,7 +74,7 @@ class _MapShellState extends State<MapShell> {
 
   Future<void> _fetchPumpsData() async {
     final response =
-        await http.get(Uri.parse('http://192.168.15.4:3000/pumps'));
+        await http.get(Uri.parse('http://192.168.15.4:5000/pumps'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       for (var pump in data) {

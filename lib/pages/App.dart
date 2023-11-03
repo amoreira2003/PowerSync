@@ -40,6 +40,7 @@ class _AppState extends State<App> {
   Stream<ConnectionStateUpdate>? connectionState;
   Stream<String>? dataStream;
   Stream<String>? coolantStream;
+  Stream<String>? chatListener;
 
   String isBluetoothConnected = 'disconnected';
 
@@ -48,11 +49,20 @@ class _AppState extends State<App> {
 
   String characteristicId = "0000fff1-0000-1000-8000-00805f9b34fb";
   String serviceId = "0000fff0-0000-1000-8000-00805f9b34fb";
+  bool ableToGetInfo = true;
+
+  void stopSendingCommands(stop) {
+    setState(() {
+      ableToGetInfo = stop;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-
+    setState(() {
+      ableToGetInfo = true;
+    });
     bluetoothManager = BluetoothManager(permissionHandler);
     bluetoothConnect();
   }
@@ -109,24 +119,31 @@ class _AppState extends State<App> {
     Stream<List<int>> coolantListener =
         await bluetoothManager.registerListener();
 
+    Stream<List<int>> chatListeners = await bluetoothManager.registerListener();
+
     Stream<String> rpmDataStream =
         StreamManager.convertAndFilterStreamToRPM(listener);
 
     Stream<String> coolantDataStream =
         StreamManager.convertAndFilterStreamToCoolant(coolantListener);
 
+    Stream<String> chatDataStream =
+        StreamManager.convertStreamForChat(chatListeners);
+
     setState(() {
       dataStream = rpmDataStream;
       coolantStream = coolantDataStream;
-
+      chatListener = chatDataStream;
       isBluetoothConnected = 'connected $coolantDataStream';
     });
 
     while (true) {
-      await Future.delayed(const Duration(milliseconds: 500));
-      await bluetoothManager.send(bluetoothManager.convertToBinary("01 0C"));
-      await Future.delayed(const Duration(milliseconds: 500));
-      await bluetoothManager.send(bluetoothManager.convertToBinary("01 05"));
+      if (ableToGetInfo) {
+        await Future.delayed(const Duration(seconds: 1));
+        await bluetoothManager.send(bluetoothManager.convertToBinary("01 0C"));
+        await Future.delayed(const Duration(seconds: 1));
+        await bluetoothManager.send(bluetoothManager.convertToBinary("01 05"));
+      }
     }
   }
 
@@ -194,8 +211,11 @@ class _AppState extends State<App> {
                     coolantStream: coolantStream),
                 LocInfo(),
                 WidgetCarousel(widgets: [
-                  DiagnosisInfo(connectionState: connectionState),
-                  DiagnosisInfo(connectionState: connectionState)
+                  DiagnosisInfo(
+                      connectionState: connectionState,
+                      bluetoothManager: bluetoothManager,
+                      chatListener: chatListener,
+                      stopSendingCommands: stopSendingCommands),
                 ]),
               ],
             ),

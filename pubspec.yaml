@@ -20,6 +20,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   permission_handler: ^10.4.3
+  visibility_detector: ^0.4.0+2
   web_socket_channel: ^2.4.0
   webview_flutter: ^4.2.4
 

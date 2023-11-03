@@ -69,8 +69,14 @@ class _AppWebsocketState extends State<AppWebsocket> {
                 return Center(child: CircularProgressIndicator());
 
               final data = jsonDecode(snapshot.data.toString());
-              int rpm = data['data']['rpm'];
-              int coolant = data['data']['coolantTemp'];
+              dynamic rpm = data['data']['rpm'];
+              dynamic coolant = data['data']['coolantTemp'];
+              dynamic battery = data['data']['batteryVoltage'];
+
+              bool power = data['data']['codes']['power'];
+              bool chassis = data['data']['codes']['chassis'];
+              bool body = data['data']['codes']['body'];
+              bool network = data['data']['codes']['network'];
 
               return Column(
                 children: [
@@ -127,13 +133,29 @@ class _AppWebsocketState extends State<AppWebsocket> {
                         onDoubleTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => ChatWebsocket(),
+                              builder: (context) => ChatWebsocket(
+                                  rpm: rpm, coolant: coolant, battery: battery),
                             ),
                           );
                         },
                         child: WidgetCarousel(widgets: [
-                          DiagnosisInfoWebsocket(),
-                          DiagnosisInfoWebsocket()
+                          DiagnosisInfoWebsocket(
+                            iconPath: 'assets/images/engine.svg',
+                            title: 'Unidade de Potência',
+                            hasProblem: power,
+                          ),
+                          DiagnosisInfoWebsocket(
+                              iconPath: 'assets/images/car.svg',
+                              title: 'Habitáculo',
+                              hasProblem: body),
+                          DiagnosisInfoWebsocket(
+                              iconPath: 'assets/images/cara.svg',
+                              title: 'Chassis',
+                              hasProblem: chassis),
+                          DiagnosisInfoWebsocket(
+                              iconPath: 'assets/images/battery.svg',
+                              title: 'Sistema Elétrico',
+                              hasProblem: network)
                         ]),
                       ),
                     ],

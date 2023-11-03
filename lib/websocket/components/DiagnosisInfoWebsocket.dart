@@ -7,212 +7,146 @@ import 'package:raizen_obd/pages/Chat.dart';
 import 'package:raizen_obd/websocket/pages/ChatWebsocket.dart';
 
 class DiagnosisInfoWebsocket extends StatelessWidget {
-  const DiagnosisInfoWebsocket({
+  DiagnosisInfoWebsocket({
+    required this.hasProblem,
+    required this.title,
+    required this.iconPath,
     super.key,
   });
+
+  String iconPath = "";
+  String title = "";
+  bool hasProblem = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onDoubleTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ChatWebsocket(),
-          ),
-        );
-      },
       onLongPress: () {
         print("Long Pressed");
         _showDialog(context);
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: Scale.scaleHeight(context, 19)),
-        width: Scale.scaleWidth(context, 319),
-        height: Scale.scaleHeight(context, 234),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/images/back.png",
-              )),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Container(
-          margin: EdgeInsets.only(top: Scale.scaleHeight(context, 21)),
+          margin: EdgeInsets.only(bottom: Scale.scaleHeight(context, 19)),
+          width: Scale.scaleWidth(context, 319),
+          height: Scale.scaleHeight(context, 234),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(
+                  "assets/images/back.png",
+                )),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(left: Scale.scaleWidth(context, 24)),
-                child: Text("Diagnóstico",
-                    style: GoogleFonts.openSans(
-                        fontSize: Scale.scaleWidth(context, 12),
-                        fontWeight: FontWeight.normal,
-                        color: const Color.fromARGB(255, 212, 212, 212))),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: Scale.scaleHeight(context, 23)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 0),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Motor      ",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Freios      ",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Radiador ",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 0),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 14),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 0),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Elétrico",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Airbag",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          child: Text("Tração",
-                              style: GoogleFonts.openSans(
-                                  fontSize: Scale.scaleWidth(context, 18),
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFFFFFF))),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 0),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 10),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: Scale.scaleHeight(context, 14),
-                              bottom: Scale.scaleHeight(context, 20)),
-                          width: Scale.scaleWidth(context, 20),
-                          height: Scale.scaleHeight(context, 20),
-                          child: SvgPicture.asset('assets/images/Check.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 34, 201, 30),
-                                  BlendMode.srcIn),
-                              semanticsLabel: 'A red up arrow'),
-                        ),
-                      ],
-                    ),
-                  ],
+                width: Scale.scaleWidth(context, 50),
+                height: Scale.scaleHeight(context, 50),
+                margin: EdgeInsets.only(
+                    top: Scale.scaleHeight(context, 20),
+                    bottom: Scale.scaleHeight(context, 20)),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(25)),
+                child: SvgPicture.asset(
+                  iconPath,
+                  fit: BoxFit.scaleDown,
+                  width: Scale.scaleWidth(context, 40),
+                  height: Scale.scaleHeight(context, 40),
                 ),
               ),
+              Text("$title",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'Barlow',
+                    fontWeight: FontWeight.w700,
+                    height: 0.09,
+                  )),
+              Container(
+                  margin: EdgeInsets.only(
+                    top: Scale.scaleHeight(context, 20),
+                  ),
+                  child: !hasProblem
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: Scale.scaleHeight(context, 14),
+                                  right: Scale.scaleWidth(context, 9.27),
+                                  bottom: Scale.scaleHeight(context, 20)),
+                              width: Scale.scaleWidth(context, 20),
+                              height: Scale.scaleHeight(context, 20),
+                              child: SvgPicture.asset('assets/images/Check.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      Color.fromARGB(255, 34, 201, 30),
+                                      BlendMode.srcIn),
+                                  semanticsLabel: 'A red up arrow'),
+                            ),
+                            Text(
+                              'Nenhum Código de Erro Encontrado',
+                              style: TextStyle(
+                                color: Color(0xFFD4D4D4),
+                                fontSize: 12,
+                                fontFamily: 'Open Sans',
+                                fontWeight: FontWeight.w400,
+                                height: 0.10,
+                              ),
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Color(0xFFDA291C)),
+                              margin: EdgeInsets.only(
+                                  top: Scale.scaleHeight(context, 14),
+                                  right: Scale.scaleWidth(context, 9.27),
+                                  bottom: Scale.scaleHeight(context, 20)),
+                              width: Scale.scaleWidth(context, 20),
+                              height: Scale.scaleHeight(context, 20),
+                              child: SvgPicture.asset(
+                                  'assets/images/delete.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      Color.fromARGB(255, 0, 0, 0),
+                                      BlendMode.srcIn),
+                                  semanticsLabel: 'A red up arrow'),
+                            ),
+                            Text(
+                              'Códigos de erro encontrados!',
+                              style: TextStyle(
+                                color: Color(0xFFD4D4D4),
+                                fontSize: 12,
+                                fontFamily: 'Open Sans',
+                                fontWeight: FontWeight.w400,
+                                height: 0.10,
+                              ),
+                            )
+                          ],
+                        )),
+              Spacer(),
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: Scale.scaleHeight(context, 17),
+                ),
+                child: Text(
+                  'Ver Códigos',
+                  style: TextStyle(
+                    color: Color(0xFFEFEFEF),
+                    fontSize: 12,
+                    fontFamily: 'Open Sans',
+                    fontWeight: FontWeight.w400,
+                    height: 0.10,
+                  ),
+                ),
+              )
             ],
-          ),
-        ),
-      ),
+          )),
     );
   }
 

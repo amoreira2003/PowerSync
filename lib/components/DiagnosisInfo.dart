@@ -2,24 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:raizen_obd/methods/BluetoothManager.dart';
 import 'package:raizen_obd/methods/Scale.dart';
 import 'package:raizen_obd/pages/Chat.dart';
 
 class DiagnosisInfo extends StatelessWidget {
-  const DiagnosisInfo({
-    super.key,
-    required this.connectionState,
-  });
+  const DiagnosisInfo(
+      {super.key,
+      required this.connectionState,
+      required this.chatListener,
+      required this.bluetoothManager,
+      required this.stopSendingCommands});
 
+  final dynamic stopSendingCommands;
   final Stream<ConnectionStateUpdate>? connectionState;
+  final Stream<String>? chatListener;
+  final BluetoothManager bluetoothManager;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: () {
+        stopSendingCommands(false);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => Chat(connectionState: connectionState!),
+            builder: (context) => Chat(
+                connectionState: connectionState,
+                chatListener: chatListener,
+                bluetoothManager: bluetoothManager,
+                stopSendingCommands: stopSendingCommands),
           ),
         );
       },

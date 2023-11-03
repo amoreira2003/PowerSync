@@ -15,6 +15,15 @@ class StreamManager {
     }
   }
 
+  static Stream<String> convertStreamForChat(
+      Stream<List<int>> inputStream) async* {
+    await for (List<int> data in inputStream) {
+      // Convert the List<int> to a String
+      String dataAsString = String.fromCharCodes(data).trim();
+      if (dataAsString != ">") yield dataAsString;
+    }
+  }
+
   static Stream<String> convertAndFilterStreamToCoolant(
       Stream<List<int>> inputStream) async* {
     await for (List<int> data in inputStream) {

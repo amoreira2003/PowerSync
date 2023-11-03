@@ -8,7 +8,15 @@ import 'package:raizen_obd/components/Messages.dart';
 import 'package:raizen_obd/methods/Scale.dart';
 
 class ChatWebsocket extends StatefulWidget {
-  const ChatWebsocket({super.key});
+  const ChatWebsocket(
+      {super.key,
+      required this.rpm,
+      required this.coolant,
+      required this.battery});
+
+  final dynamic rpm;
+  final dynamic coolant;
+  final dynamic battery;
 
   @override
   State<ChatWebsocket> createState() => _ChatState();
@@ -76,13 +84,57 @@ class _ChatState extends State<ChatWebsocket> {
     super.dispose();
   }
 
+  void sendMessageToObd(message) {
+    addMessage(message);
+    switch (message) {
+      case 'value':
+        break;
+      default:
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     addSugesstionNoScroll("Gostaria de ver as opções.", () {
       addNetworkMessage("Aqui estão as opções:");
-      addSugesstionNoScroll("Ver Voltagem da Bateria", () {});
+      addSugesstionNoScroll("Voltagem da Bateria", () {
+        addMessage("Qual a voltagem da minha bateria?");
+        if (widget.battery < 12.2) {
+          addNetworkMessageNoScroll(
+              "A voltagem da sua bateria é de ${widget.battery}V");
+          addNetworkMessageNoScroll(
+              "A voltagem da sua bateria está baixa. Recomendamos que você substitua a bateria.");
+        } else {
+          addNetworkMessageNoScroll(
+              "A voltagem da sua bateria é de ${widget.battery}V");
+        }
+
+        _scrollToBottom();
+      });
+
+      addSugesstionNoScroll("Temperatura do Radiador", () {
+        addMessage("Qual a temperatura do Radiador?");
+        if (widget.coolant < 65) {
+          addNetworkMessageNoScroll(
+              "Temperatura atual do radiador é de ${widget.coolant}ºC. O carro ainda está aquecendo para sua temperatura ideal.");
+        } else if (widget.coolant > 120) {
+          addNetworkMessage(
+              "Temperatura atual do radiador é de ${widget.coolant}ºC. O carro está superaquecendo.");
+        } else {
+          addNetworkMessageNoScroll(
+              "Temperatura atual do radiador é de ${widget.coolant}ºC.");
+        }
+
+        _scrollToBottom();
+      });
+
+      addSugesstionNoScroll("Qual o RPM do carro?", () {
+        addMessage("Qual o RPM do carro?");
+        addNetworkMessage('O RPM do carro é de ${widget.rpm}RPM');
+        _scrollToBottom();
+      });
     });
   }
 
@@ -157,7 +209,7 @@ class _ChatState extends State<ChatWebsocket> {
                                   width: Scale.scaleWidth(context, 8),
                                   height: Scale.scaleHeight(context, 8)),
                             ),
-                            Text("Override",
+                            Text("Online",
                                 style: GoogleFonts.dmSans(
                                     fontSize: Scale.scaleWidth(context, 14),
                                     fontWeight: FontWeight.w600,
@@ -237,8 +289,9 @@ class _ChatState extends State<ChatWebsocket> {
               InkWell(
                 enableFeedback: false,
                 onTap: () {
-                  addMessage("Hello World!");
-                  addNetworkMessage("Happy Hackaween!");
+                  sendMessageToObd(_textEditingController.text);
+                  _textEditingController.clear();
+                  _scrollToBottom();
                 },
                 child: Container(
                   width: 44,

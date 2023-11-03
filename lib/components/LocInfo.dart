@@ -107,9 +107,6 @@ class LocInfo extends StatelessWidget {
         if (placemark.locality != null) {
           address += placemark.locality! + ' ';
         }
-        if (placemark.administrativeArea != null) {
-          address += placemark.administrativeArea!;
-        }
 
         return address;
       } else {

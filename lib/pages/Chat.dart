@@ -4,12 +4,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:raizen_obd/components/Messages.dart';
+import 'package:raizen_obd/methods/BluetoothManager.dart';
 import 'package:raizen_obd/methods/Scale.dart';
 
 class Chat extends StatefulWidget {
-  const Chat({super.key, required this.connectionState});
+  const Chat(
+      {super.key,
+      required this.connectionState,
+      required this.chatListener,
+      required this.bluetoothManager,
+      required this.stopSendingCommands});
 
-  final Stream<ConnectionStateUpdate> connectionState;
+  final Stream<ConnectionStateUpdate>? connectionState;
+  final BluetoothManager bluetoothManager;
+  final Stream<String>? chatListener;
+  final dynamic stopSendingCommands;
 
   @override
   State<Chat> createState() => _ChatState();
@@ -22,7 +31,7 @@ class _ChatState extends State<Chat> {
     NetworkMessage(
         message:
             "Olá, me chamo OBDZito, seu assistente virtual para o seu carro. Como posso ajudar?")
-  ]; // List of messages6
+  ]; // List of messages
 
   @override
   void dispose() {
@@ -31,20 +40,17 @@ class _ChatState extends State<Chat> {
   }
 
   void addNetworkMessage(message) {
-    setState(() {
-      messages.add(NetworkMessage(message: message));
-      print("State Update Run");
-      messages = messages;
-    });
+    messages.add(NetworkMessage(message: message));
     _scrollToBottom();
   }
 
+  void sendMessageToObd(message) {
+    messages.add(Message(message: message));
+    widget.bluetoothManager.send(message);
+  }
+
   void addMessage(message) {
-    setState(() {
-      messages.add(Message(message: message));
-      messages = messages;
-    });
-    print(messages.length);
+    messages.add(Message(message: message));
     _scrollToBottom();
   }
 
@@ -75,6 +81,7 @@ class _ChatState extends State<Chat> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      widget.stopSendingCommands(true);
                     },
                     child: SvgPicture.asset('assets/images/Left.svg')),
               ),
@@ -195,15 +202,24 @@ class _ChatState extends State<Chat> {
                 }),
           ),
           Expanded(
-              child: ListView.builder(
-            padding: EdgeInsets.only(top: Scale.scaleWidth(context, 5)),
-            controller: _scrollController,
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              return messages[index];
-              // Other widgets for each list item
-            },
-          )),
+              child: StreamBuilder<Object>(
+                  stream: widget.chatListener,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      addNetworkMessage(snapshot.data.toString());
+                    }
+
+                    return ListView.builder(
+                      padding:
+                          EdgeInsets.only(top: Scale.scaleWidth(context, 5)),
+                      controller: _scrollController,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        return messages[index];
+                        // Other widgets for each list item
+                      },
+                    );
+                  })),
           Row(
             children: [
               Container(
@@ -241,8 +257,9 @@ class _ChatState extends State<Chat> {
               InkWell(
                 enableFeedback: false,
                 onTap: () {
-                  addMessage("Hello World!");
-                  addNetworkMessage("Happy Hackaween!");
+                  sendMessageToObd(_textEditingController.text);
+                  _textEditingController.clear();
+                  _scrollToBottom();
                 },
                 child: Container(
                   width: 44,

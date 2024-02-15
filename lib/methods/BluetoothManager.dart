@@ -46,12 +46,9 @@ class BluetoothManager {
   }
 
   Future<Stream<ConnectionStateUpdate>> connect(deviceToConnect) async {
-    if (deviceToConnect == null) {
-      throw ArgumentError("Device cannot be null");
-    }
-    if (currentConnectedDevice != null) {
+    if (deviceToConnect == null) throw ArgumentError("Device cannot be null");
+    if (currentConnectedDevice != null)
       throw ArgumentError("Already connected to a device");
-    }
 
     currentConnectedDevice = deviceToConnect;
     return flutterReactiveBle.connectToDevice(
@@ -60,11 +57,9 @@ class BluetoothManager {
 
   bool isRPMString(receivedString) {
     List<String> parts = receivedString.split(' ');
-    if (parts.length == 4 && parts[0] == "41" && parts[1] == "0C") {
-      return true;
-    } else {
-      return false;
-    }
+    if (parts.length == 4 && parts[0] == "41" && parts[1] == "0C") return true;
+
+    return false;
   }
 
   int convertRPM(String receivedString) {
@@ -88,7 +83,6 @@ class BluetoothManager {
 
     if (parts.length == 3 && parts[0] == "41" && parts[1] == "05") {
       int XX = int.parse(parts[2], radix: 16);
-
       double result = XX - 40;
 
       return result.round();

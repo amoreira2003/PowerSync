@@ -11,7 +11,7 @@ A jornada de PowerSync começou com uma ideia audaciosa que rapidamente se trans
 PowerSync é projetado para ser mais do que um simples aplicativo; é uma ferramenta poderosa que coloca o controle nas mãos dos motoristas. Através de diagnósticos precisos e informações em tempo real, promovemos uma condução mais segura e consciente. Nosso objetivo é transformar a maneira como os motoristas interagem com seus veículos, promovendo uma cultura de manutenção preventiva e cuidado.
 
 ## 🤝 Colaboração e Espírito de Equipe
-Nossa equipe é formada por indivíduos talentosos que começaram como estranhos e se tornaram amigos e colaboradores dedicados: Alexandre Moreira, Guilherme Sampaio, João Marco Pereira e Thiago Sardinha. A união, dedicação e a paixão compartilhada pelo desenvolvimento tecnológico foram cruciais para o sucesso do PowerSync.
+Nossa equipe é formada por indivíduos talentosos que começaram como estranhos e se tornaram amigos e colaboradores dedicados: Alexandre Moreira Junior, Marcelo R. Corner Filho, Marcelo Guilherme Sampaio, João Marco Pereira e Thiago Sardinha. A união, dedicação e a paixão compartilhada pelo desenvolvimento tecnológico foram cruciais para o sucesso do PowerSync.
 
 ## 🙏 Agradecimentos
 Um agradecimento especial ao nosso mentor e professor, Sandro A Ferraz, PhD., cuja orientação foi fundamental. Agradecemos também à FIAP e à Raízen pelo suporte e pela oportunidade de transformar nossa visão em realidade.
